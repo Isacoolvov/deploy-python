@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  demo:
+    build: .
+    container_name: deploy-python-demo
+    restart: on-failure
+
+  nginx:
+    image: nginx:mainline
+    container_name: deploy-python-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./deploy-python.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - demo
+    restart: on-failure
